@@ -10,8 +10,8 @@
       --pink-primary: #ec4899;
       --pink-dark: #be185d;
       --pink-light: #fbcfe8;
-      --bg-color: #0f172a; /* Deep Black/Dark Navy Background */
-      --card-bg: #1e293b; /* Dark Slate Card Background */
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
       --text-color: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #334155;
@@ -20,7 +20,7 @@
     }
 
     body.dark-mode {
-      --bg-color: #000000; /* Pure Black Mode */
+      --bg-color: #000000;
       --card-bg: #111111;
       --text-color: #ffffff;
       --text-muted: #a1a1aa;
@@ -43,7 +43,6 @@
       transition: background-color 0.3s, color 0.3s;
     }
     
-    /* Header Black & Pink Gradient */
     .aksel-header {
       background: linear-gradient(135deg, #831843 0%, #000000 100%);
       color: white;
@@ -78,7 +77,6 @@
       backdrop-filter: blur(4px);
     }
 
-    /* Container overlapping header */
     .content-container {
       padding: 0 16px;
       margin-top: -32px;
@@ -93,7 +91,6 @@
       border: 1px solid var(--border-color);
     }
 
-    /* Ringkasan Saldo */
     .card-title {
       font-size: 14px;
       font-weight: 700;
@@ -129,7 +126,6 @@
       margin-top: 4px;
     }
 
-    /* Form Inputs */
     form {
       display: flex;
       flex-direction: column;
@@ -187,7 +183,6 @@
       display: none;
     }
 
-    /* Transactions List */
     .transaction-list {
       list-style: none;
     }
@@ -253,7 +248,6 @@
     .btn-edit { color: var(--pink-primary); }
     .btn-nota { color: #f472b6; }
 
-    /* Modal Nota */
     .modal {
       display: none;
       position: fixed;
@@ -305,7 +299,7 @@
   </div>
 
   <div class="content-container">
-    <!-- Ringkasan Dompet -->
+    <!-- Ringkasan Saldo -->
     <div class="card">
       <div class="card-title">Ringkasan Saldo</div>
       <div class="wallets">
@@ -400,14 +394,14 @@
     </div>
   </div>
 
-  <!-- 1. PERBAIKAN: SDK Firebase dipanggil DULUAN sebelum script internal -->
+  <!-- Load SDK Firebase Compat Version -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-  <!-- 2. PERBAIKAN: Konfigurasi Firebase baru (keuangan-keluarga-2597a) -->
+  <!-- Inisialisasi Firebase & Logika Aplikasi -->
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyCjYegoSTgqi3H8f9goiZb...", // Salin lengkap dari Firebase Console kamu
+      apiKey: "AIzaSyCjYegoSTgqi3H8f9goiZb8UQbmQvyOfCw",
       authDomain: "keuangan-keluarga-2597a.firebaseapp.com",
       databaseURL: "https://keuangan-keluarga-2597a-default-rtdb.firebaseio.com",
       projectId: "keuangan-keluarga-2597a",
