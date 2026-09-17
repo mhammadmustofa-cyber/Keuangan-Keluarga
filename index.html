@@ -3,28 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keuangan Keluarga - Catatan Finansial Berkah</title>
+  <title>Keuangan Keluarga</title>
   <style>
     :root {
-      /* Palette BSI Syariah */
-      --bsi-teal: #00828a;
-      --bsi-teal-dark: #005e64;
-      --bsi-gold: #e2a028;
-      --bsi-bg: #e8f0eb;
+      --bg-color: #f8fafc;
       --card-bg: #ffffff;
-      --text-color: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-      --border-color: #cbd5e1;
-      --income: #059669;
-      --expense: #dc2626;
-    }
-
-    body.dark-mode {
-      --bsi-bg: #0f172a;
-      --card-bg: #1e293b;
-      --text-color: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: #334155;
+      --orange-primary: #f97316;
+      --orange-light: #ffedd5;
+      --lime-active: #d9f99d;
+      --lime-text: #3f6212;
+      --tosca-bg: #a5f3fc;
+      --border-color: #f1f5f9;
+      --income: #10b981;
+      --expense: #ef4444;
     }
 
     * {
@@ -35,179 +28,296 @@
     }
 
     body {
-      background-color: var(--bsi-bg);
-      color: var(--text-color);
-      padding-bottom: 30px;
-      transition: background-color 0.3s, color 0.3s;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      max-width: 480px;
+      margin: 0 auto;
+      padding-bottom: 80px;
     }
 
-    /* Header Utama Khas BSI */
-    .bsi-header {
-      background: linear-gradient(135deg, var(--bsi-teal) 0%, var(--bsi-teal-dark) 100%);
-      color: white;
-      padding: 16px 24px;
+    /* Header Profile & Quick Action */
+    .header-profile {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 130, 138, 0.2);
+      padding: 20px 20px 10px 20px;
     }
 
-    .brand-section {
+    .user-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    /* Logo Bintang/Cresent Syariah BSI */
-    .bsi-logo {
-      width: 42px;
-      height: 42px;
-      background: var(--bsi-gold);
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
+      background: #e2e8f0;
       display: flex;
+      align-items: center;
       justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 22px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      font-size: 18px;
     }
 
-    .brand-title {
-      font-size: 22px;
+    .greeting-name {
+      font-size: 18px;
       font-weight: 800;
-      color: #ffffff;
-      line-height: 1.1;
     }
 
-    .brand-subtitle {
-      font-size: 12px;
-      color: #e2e8f0;
-      font-style: italic;
-    }
-
-    .theme-toggle-btn {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 13px;
+    .header-icons {
       display: flex;
-      align-items: center;
-      gap: 6px;
+      gap: 16px;
     }
 
-    /* Layout Utama Grid Responsive */
-    .main-container {
-      max-width: 1200px;
-      margin: 24px auto;
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 20px;
-    }
-
-    @media (max-width: 850px) {
-      .main-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      border: 1px solid var(--border-color);
-      position: relative;
-    }
-
-    /* Motif Islami / Batik Frame Khas BSI */
-    .card-bsi-frame {
-      border: 3px double var(--bsi-teal);
-      background-color: var(--card-bg);
-      background-image: radial-gradient(var(--bsi-gold) 0.5px, transparent 0.5px);
-      background-size: 12px 12px;
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--bsi-teal-dark);
+    .icon-btn {
       text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
     }
 
-    .saldo-display {
+    .icon-btn span {
+      font-size: 20px;
+      display: block;
+    }
+
+    /* Navigation Pill Bar */
+    .nav-pill-container {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 30px;
+      padding: 4px;
+      margin: 12px 20px;
+      gap: 4px;
+    }
+
+    .nav-pill {
+      flex: 1;
       text-align: center;
       padding: 10px 0;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 25px;
+      color: var(--text-muted);
+      cursor: pointer;
     }
 
-    .saldo-amount {
-      font-size: 32px;
+    .nav-pill.active {
+      background: var(--lime-active);
+      color: var(--lime-text);
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px 10px 20px;
+    }
+
+    .section-title {
+      font-size: 16px;
       font-weight: 800;
-      color: var(--bsi-teal-dark);
-      margin-top: 4px;
     }
 
-    /* Form Input */
+    .section-action {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--orange-primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Cards Horizontal Carousel */
+    .cards-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 0 20px 10px 20px;
+      scrollbar-width: none;
+    }
+
+    .cards-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .portfolio-card {
+      min-width: 110px;
+      background: #c7d2fe;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .portfolio-card span {
+      font-size: 24px;
+    }
+
+    .portfolio-card p {
+      font-size: 12px;
+      font-weight: 700;
+      color: #312e81;
+    }
+
+    .account-card {
+      min-width: 260px;
+      background: linear-gradient(135deg, #ff8a00 0%, #e55300 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 18px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+    }
+
+    .account-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+
+    .account-number {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    .account-label {
+      font-size: 11px;
+      margin-top: 14px;
+      opacity: 0.85;
+    }
+
+    .account-balance {
+      font-size: 20px;
+      font-weight: 800;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-utama {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* Grid Fitur Pilihan */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 12px;
+      padding: 10px 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .feature-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    /* Warna Icon Fitur Modern */
+    .bg-transfer { background: #bae6fd; color: #0284c7; }
+    .bg-tapcash { background: #fed7aa; color: #ea580c; }
+    .bg-bayar { background: #c7d2fe; color: #4338ca; }
+    .bg-ewallet { background: #a7f3d0; color: #059669; }
+    .bg-va { background: #99f6e4; color: #0d9488; }
+    .bg-luar { background: #a5f3fc; color: #0284c7; }
+    .bg-lifestyle { background: #ddd6fe; color: #7c3aed; }
+    .bg-semua { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    /* Form Input & List Transaksi */
+    .card-box {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 10px 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
     form {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .input-group label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--text-color);
+      color: var(--text-muted);
     }
 
-    input, select {
+    input, select, button {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1.5px solid var(--border-color);
-      background-color: var(--card-bg);
-      color: var(--text-color);
-      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
       outline: none;
     }
 
     input:focus, select:focus {
-      border-color: var(--bsi-teal);
+      border-color: var(--orange-primary);
     }
 
     .btn-submit {
-      background: linear-gradient(135deg, var(--bsi-teal) 0%, var(--bsi-teal-dark) 100%);
-      color: #ffffff;
+      background: var(--orange-primary);
+      color: white;
       border: none;
-      padding: 14px;
-      border-radius: 25px;
       font-weight: 700;
-      font-size: 15px;
+      border-radius: 20px;
+      padding: 12px;
       cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 4px 10px rgba(0, 130, 138, 0.3);
+      margin-top: 6px;
     }
 
     .btn-cancel {
-      background-color: var(--text-muted);
+      background: #94a3b8;
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 25px;
-      font-weight: 600;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 8px;
       cursor: pointer;
       display: none;
     }
@@ -221,42 +331,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 0;
-      border-bottom: 1px dashed var(--border-color);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .transaction-item:last-child {
       border-bottom: none;
     }
 
-    .tx-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .tx-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .tx-icon.pemasukan { background: #d1fae5; color: var(--income); }
-    .tx-icon.pengeluaran { background: #fee2e2; color: var(--expense); }
-
     .tx-info h4 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      color: var(--text-color);
     }
 
     .tx-info p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
@@ -266,30 +355,58 @@
 
     .amount {
       font-weight: 800;
-      font-size: 15px;
+      font-size: 13px;
     }
 
     .amount.pemasukan { color: var(--income); }
     .amount.pengeluaran { color: var(--expense); }
 
     .action-btns {
-      margin-top: 4px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       justify-content: flex-end;
+      margin-top: 4px;
     }
 
     .btn-action {
       background: none;
       border: none;
+      font-size: 10px;
+      font-weight: 700;
       cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
     }
 
     .btn-delete { color: var(--expense); }
-    .btn-edit { color: var(--bsi-teal); }
-    .btn-nota { color: var(--bsi-gold); }
+    .btn-edit { color: var(--orange-primary); }
+
+    /* Bottom Bar QRIS */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      pointer-events: none;
+    }
+
+    .qris-btn {
+      pointer-events: auto;
+      background: #000000;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
 
     /* Modal Nota */
     .modal {
@@ -306,7 +423,7 @@
     .modal-content {
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 20px;
+      padding: 16px;
       max-width: 400px;
       width: 100%;
       text-align: center;
@@ -320,7 +437,7 @@
     }
 
     .btn-close {
-      background: var(--bsi-teal);
+      background: var(--orange-primary);
       color: white;
       border: none;
       padding: 8px 16px;
@@ -333,102 +450,176 @@
 </head>
 <body>
 
-  <!-- Header BSI Keuangan Keluarga -->
-  <div class="bsi-header">
-    <div class="brand-section">
-      <div class="bsi-logo">☪</div>
-      <div>
-        <div class="brand-title">Keuangan Keluarga</div>
-        <div class="brand-subtitle">Catatan Finansial Simpel & Berkah</div>
+  <!-- Header Profile -->
+  <div class="header-profile">
+    <div class="user-info">
+      <div class="avatar-circle">👤</div>
+      <div class="greeting-name">Hi, M Mustofa!</div>
+    </div>
+    <div class="header-icons">
+      <div class="icon-btn">
+        <span>🔔</span> Notifikasi
+      </div>
+      <div class="icon-btn">
+        <span>📄</span> Bukti Transaksi
       </div>
     </div>
-    <button class="theme-toggle-btn" onclick="toggleTheme()">☀️ Mode Terang</button>
   </div>
 
-  <div class="main-container">
-    <!-- Kolom Kiri: Ringkasan Saldo & Form -->
-    <div>
-      <div class="card card-bsi-frame">
-        <div class="card-title">RINGKASAN SALDO</div>
-        <div class="saldo-display">
-          <div class="saldo-amount" id="total-saldo">Rp 0</div>
-        </div>
-      </div>
+  <!-- Tab Navigation Pill -->
+  <div class="nav-pill-container">
+    <div class="nav-pill">Insight</div>
+    <div class="nav-pill active">Transaksi</div>
+    <div class="nav-pill">Growth</div>
+  </div>
 
-      <div class="card">
-        <div class="card-title" id="form-title" style="text-align: left;">TAMBAH TRANSAKSI BARU</div>
-        <form id="tx-form" onsubmit="saveTransaction(event)">
-          <input type="hidden" id="tx-id">
-          <input type="hidden" id="tx-receipt-data">
+  <!-- Rekening Section -->
+  <div class="section-header">
+    <div class="section-title">Rekening transaksi kamu</div>
+    <div class="section-action">Lihat Semua</div>
+  </div>
 
-          <div class="input-group">
-            <label for="date">Tanggal</label>
-            <input type="date" id="date" required>
-          </div>
-
-          <div class="input-group">
-            <label for="desc">Keterangan</label>
-            <input type="text" id="desc" placeholder="Keterangan" required>
-          </div>
-
-          <div class="input-group">
-            <label for="amount">Jumlah (Rp)</label>
-            <input type="number" id="amount" placeholder="0" required>
-          </div>
-
-          <div class="input-group">
-            <label for="type">Jenis Transaksi</label>
-            <select id="type">
-              <option value="pemasukan">Pemasukan</option>
-              <option value="pengeluaran">Pengeluaran</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="wallet">Sumber / Dompet</label>
-            <select id="wallet">
-              <option value="bank">Tans Syariah Wallet</option>
-              <option value="cash">Cash</option>
-              <option value="ewallet">E-Wallet</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="category">Kategori</label>
-            <select id="category">
-              <option value="Pemasukan">Pemasukan</option>
-              <option value="Pengeluaran">Pengeluaran</option>
-              <option value="Makanan">Makanan & Minuman</option>
-              <option value="Transport">Transportasi</option>
-              <option value="Iuran">Iuran / Zakat</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="receipt">Upload / Lampirkan Nota (Gambar)</label>
-            <input type="file" id="receipt" accept="image/*" onchange="handleImageUpload(event)">
-          </div>
-
-          <button type="submit" id="btn-submit" class="btn-submit">Simpan Transaksi</button>
-          <button type="button" id="btn-cancel" class="btn-cancel" onclick="resetForm()">Batal Edit</button>
-        </form>
-      </div>
+  <!-- Cards Scroll Horizontal -->
+  <div class="cards-scroll">
+    <div class="portfolio-card">
+      <span>📊</span>
+      <p>Lihat Portfolio</p>
     </div>
 
-    <!-- Kolom Kanan: Riwayat Transaksi -->
-    <div>
-      <div class="card">
-        <div class="card-title" style="text-align: center;">RIWAYAT TRANSAKSI</div>
-        <ul class="transaction-list" id="tx-list"></ul>
+    <div class="account-card">
+      <div class="badge-utama">Utama</div>
+      <div class="account-type">TAPLUS DIGITAL</div>
+      <div class="account-number">1821896958</div>
+      <div class="account-label">Saldo efektif</div>
+      <div class="account-balance">
+        <span id="bal-total">Rp ********</span>
+        <span style="font-size: 14px; cursor: pointer;" onclick="toggleHideSaldo()">👁️</span>
       </div>
+    </div>
+  </div>
+
+  <!-- Fitur Pilihan Grid -->
+  <div class="section-header">
+    <div class="section-title">Fitur pilihan kamu</div>
+    <div class="section-action">Atur</div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-item" onclick="selectType('pengeluaran')">
+      <div class="feature-icon bg-transfer">↗️</div>
+      <div class="feature-label">Transfer</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-tapcash">💳</div>
+      <div class="feature-label">TapCash</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-bayar">🧾</div>
+      <div class="feature-label">Bayar & Beli</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-ewallet">📲</div>
+      <div class="feature-label">E-Wallet</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-va">🏦</div>
+      <div class="feature-label">Virtual Account</div>
+    </div>
+    <div class="feature-item" onclick="selectType('pemasukan')">
+      <div class="feature-icon bg-luar">🌐</div>
+      <div class="feature-label">Transfer Luar Negeri</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-lifestyle">🛍️</div>
+      <div class="feature-label">Lifestyle</div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon bg-semua">🎛️</div>
+      <div class="feature-label">Lihat Semua</div>
+    </div>
+  </div>
+
+  <!-- Input Transaksi Baris Baru -->
+  <div class="card-box">
+    <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);" id="form-title">
+      Tambah Transaksi Baru
+    </div>
+    <form id="tx-form" onsubmit="saveTransaction(event)">
+      <input type="hidden" id="tx-id">
+      <input type="hidden" id="tx-receipt-data">
+
+      <div class="input-group">
+        <label for="date">Tanggal</label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="input-group">
+        <label for="desc">Keterangan</label>
+        <input type="text" id="desc" placeholder="Contoh: Belanja / Transfer" required>
+      </div>
+
+      <div class="input-group">
+        <label for="amount">Jumlah (Rp)</label>
+        <input type="number" id="amount" placeholder="0" required>
+      </div>
+
+      <div class="input-group">
+        <label for="type">Jenis Transaksi</label>
+        <select id="type">
+          <option value="pengeluaran">Pengeluaran</option>
+          <option value="pemasukan">Pemasukan</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="wallet">Sumber / Dompet</label>
+        <select id="wallet">
+          <option value="bank">Taplus Digital</option>
+          <option value="cash">Cash</option>
+          <option value="ewallet">E-Wallet</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="category">Kategori</label>
+        <select id="category">
+          <option value="Makanan">Makanan & Minuman</option>
+          <option value="Transport">Transportasi</option>
+          <option value="Gaji">Gaji / Pendapatan</option>
+          <option value="Lainnya">Lain-lain</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="receipt">Bukti Transaksi (Gambar)</label>
+        <input type="file" id="receipt" accept="image/*" onchange="handleImageUpload(event)">
+      </div>
+
+      <button type="submit" id="btn-submit" class="btn-submit">Simpan Transaksi</button>
+      <button type="button" id="btn-cancel" class="btn-cancel" onclick="resetForm()">Batal Edit</button>
+    </form>
+  </div>
+
+  <!-- Riwayat Transaksi -->
+  <div class="card-box">
+    <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
+      Riwayat Transaksi
+    </div>
+    <ul class="transaction-list" id="tx-list"></ul>
+  </div>
+
+  <!-- QRIS Bottom Bar -->
+  <div class="bottom-bar">
+    <div class="qris-btn">
+      <span>📷</span> QRIS
     </div>
   </div>
 
   <!-- Modal View Nota -->
   <div class="modal" id="receipt-modal">
     <div class="modal-content">
-      <h4 style="font-size: 16px;">Bukti Nota Transaksi</h4>
-      <img id="modal-img" src="" alt="Nota Transaksi">
+      <h4 style="font-size: 15px;">Bukti Transaksi</h4>
+      <img id="modal-img" src="" alt="Bukti Transaksi">
       <button class="btn-close" onclick="closeModal()">Tutup</button>
     </div>
   </div>
@@ -437,7 +628,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-  <!-- Firebase Logic -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDWVKUMsOgZ_RQkva2sKPT_KatNxkJlrWA",
@@ -455,8 +645,26 @@
 
     document.getElementById('date').valueAsDate = new Date();
 
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
+    let isSaldoHidden = true;
+    let actualSaldo = 0;
+
+    function toggleHideSaldo() {
+      isSaldoHidden = !isSaldoHidden;
+      updateSaldoDisplay();
+    }
+
+    function updateSaldoDisplay() {
+      const saldoEl = document.getElementById('bal-total');
+      if (isSaldoHidden) {
+        saldoEl.innerText = "Rp ********";
+      } else {
+        saldoEl.innerText = `Rp ${actualSaldo.toLocaleString('id-ID')}`;
+      }
+    }
+
+    function selectType(typeVal) {
+      document.getElementById('type').value = typeVal;
+      document.getElementById('tx-form').scrollIntoView({ behavior: 'smooth' });
     }
 
     let currentReceiptBase64 = "";
@@ -504,9 +712,10 @@
       document.getElementById('category').value = category;
       document.getElementById('tx-receipt-data').value = receipt || "";
 
-      document.getElementById('form-title').innerText = 'EDIT TRANSAKSI';
+      document.getElementById('form-title').innerText = 'Edit Transaksi';
       document.getElementById('btn-submit').innerText = 'Update Transaksi';
       document.getElementById('btn-cancel').style.display = 'block';
+      document.getElementById('tx-form').scrollIntoView({ behavior: 'smooth' });
     }
 
     function resetForm() {
@@ -514,7 +723,7 @@
       document.getElementById('tx-receipt-data').value = '';
       document.getElementById('tx-form').reset();
       document.getElementById('date').valueAsDate = new Date();
-      document.getElementById('form-title').innerText = 'TAMBAH TRANSAKSI BARU';
+      document.getElementById('form-title').innerText = 'Tambah Transaksi Baru';
       document.getElementById('btn-submit').innerText = 'Simpan Transaksi';
       document.getElementById('btn-cancel').style.display = 'none';
       currentReceiptBase64 = "";
@@ -536,7 +745,7 @@
 
     db.ref('transactions').on('value', (snapshot) => {
       const data = snapshot.val();
-      let totalSaldo = 0;
+      actualSaldo = 0;
       const listEl = document.getElementById('tx-list');
       listEl.innerHTML = '';
 
@@ -545,9 +754,9 @@
           const tx = data[key];
           
           if (tx.type === 'pemasukan') {
-            totalSaldo += tx.amount;
+            actualSaldo += tx.amount;
           } else {
-            totalSaldo -= tx.amount;
+            actualSaldo -= tx.amount;
           }
 
           const hasReceipt = tx.receipt && tx.receipt.length > 0;
@@ -555,20 +764,16 @@
           const li = document.createElement('li');
           li.className = 'transaction-item';
           li.innerHTML = `
-            <div class="tx-left">
-              <div class="tx-icon ${tx.type}">${tx.type === 'pemasukan' ? '↑' : '↓'}</div>
-              <div class="tx-info">
-                <h4>${tx.desc}</h4>
-                <p>Tans Syariah Wallet</p>
-              </div>
+            <div class="tx-info">
+              <h4>${tx.desc}</h4>
+              <p>${tx.date || '-'} • ${tx.category}</p>
             </div>
             <div class="tx-right">
               <div class="amount ${tx.type}">
-                Rp ${tx.amount.toLocaleString('id-ID')}
+                ${tx.type === 'pemasukan' ? '+' : '-'} Rp ${tx.amount.toLocaleString('id-ID')}
               </div>
-              <p style="font-size: 11px; color: var(--text-muted);">${tx.type}</p>
               <div class="action-btns">
-                ${hasReceipt ? `<button class="btn-action btn-nota" onclick="showReceipt('${tx.receipt}')">📄 Nota</button>` : ''}
+                ${hasReceipt ? `<button class="btn-action btn-edit" onclick="showReceipt('${tx.receipt}')">Bukti</button>` : ''}
                 <button class="btn-action btn-edit" onclick="editTransaction('${key}', '${tx.date || ''}', '${tx.desc}', ${tx.amount}, '${tx.type}', '${tx.wallet}', '${tx.category}', '${tx.receipt || ''}')">Edit</button>
                 <button class="btn-action btn-delete" onclick="deleteTransaction('${key}')">Hapus</button>
               </div>
@@ -578,7 +783,7 @@
         });
       }
 
-      document.getElementById('total-saldo').innerText = `Rp ${totalSaldo.toLocaleString('id-ID')}`;
+      updateSaldoDisplay();
     });
   </script>
 </body>
