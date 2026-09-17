@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keuangan Keluarga - Catatan Simpel</title>
+  <style>
+    :root {
+      /* Palette Black & Pink */
+      --pink-primary: #ec4899;
+      --pink-dark: #be185d;
+      --pink-light: #fbcfe8;
+      --bg-color: #0f172a; /* Deep Black/Dark Navy Background */
+      --card-bg: #1e293b; /* Dark Slate Card Background */
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --income: #10b981;
+      --expense: #f43f5e;
+    }
+
+    body.dark-mode {
+      --bg-color: #000000; /* Pure Black Mode */
+      --card-bg: #111111;
+      --text-color: #ffffff;
+      --text-muted: #a1a1aa;
+      --border-color: #27272a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 30px;
+      max-width: 480px;
+      margin: 0 auto;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* Header Black & Pink Gradient */
+    .aksel-header {
+      background: linear-gradient(135deg, #831843 0%, #000000 100%);
+      color: white;
+      padding: 24px 20px 48px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--pink-primary);
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Container overlapping header */
+    .content-container {
+      padding: 0 16px;
+      margin-top: -32px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Ringkasan Saldo */
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--pink-primary);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .wallets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .wallet-item {
+      padding: 12px 8px;
+      border-radius: 12px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .wallet-item h4 {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .wallet-item p {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--pink-primary);
+      margin-top: 4px;
+    }
+
+    /* Form Inputs */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--pink-primary);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
+      color: #ffffff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+      transition: transform 0.1s;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .btn-cancel {
+      background-color: var(--text-muted);
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Transactions List */
+    .transaction-list {
+      list-style: none;
+    }
+
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .transaction-item:last-child {
+      border-bottom: none;
+    }
+
+    .tx-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .tx-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tx-right {
+      text-align: right;
+    }
+
+    .amount {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .amount.pemasukan {
+      color: var(--income);
+    }
+
+    .amount.pengeluaran {
+      color: var(--expense);
+    }
+
+    .action-btns {
+      margin-top: 4px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .btn-action {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 4px;
+    }
+
+    .btn-delete { color: var(--expense); }
+    .btn-edit { color: var(--pink-primary); }
+    .btn-nota { color: #f472b6; }
+
+    /* Modal Nota */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 350px;
+      border-radius: 8px;
+      object-fit: contain;
+      margin-top: 10px;
+    }
+
+    .btn-close {
+      background: var(--pink-primary);
+      color: white;
+      border: none;
+      margin-top: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Keuangan Keluarga -->
+  <div class="aksel-header">
+    <div class="header-top">
+      <div class="brand-title">Keuangan Keluarga</div>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙 Mode Malam</button>
+    </div>
+    <p style="font-size: 13px; opacity: 0.9;">Selamat Datang di Catatan Finansial</p>
+  </div>
+
+  <div class="content-container">
+    <!-- Ringkasan Dompet -->
+    <div class="card">
+      <div class="card-title">Ringkasan Saldo</div>
+      <div class="wallets">
+        <div class="wallet-item">
+          <h4>Cash</h4>
+          <p id="bal-cash">Rp 0</p>
+        </div>
+        <div class="wallet-item">
+          <h4>Bank</h4>
+          <p id="bal-bank">Rp 0</p>
+        </div>
+        <div class="wallet-item">
+          <h4>E-Wallet</h4>
+          <p id="bal-ewallet">Rp 0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Input Transaksi -->
+    <div class="card">
+      <div class="card-title" id="form-title">Tambah Transaksi Baru</div>
+      <form id="tx-form" onsubmit="saveTransaction(event)">
+        <input type="hidden" id="tx-id">
+        <input type="hidden" id="tx-receipt-data">
+
+        <div class="input-group">
+          <label for="date">Tanggal</label>
+          <input type="date" id="date" required>
+        </div>
+
+        <div class="input-group">
+          <label for="desc">Keterangan</label>
+          <input type="text" id="desc" placeholder="Contoh: Beli Bensin / Bayar Iuran" required>
+        </div>
+
+        <div class="input-group">
+          <label for="amount">Jumlah (Rp)</label>
+          <input type="number" id="amount" placeholder="0" required>
+        </div>
+
+        <div class="input-group">
+          <label for="type">Jenis Transaksi</label>
+          <select id="type">
+            <option value="pengeluaran">Pengeluaran</option>
+            <option value="pemasukan">Pemasukan</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="wallet">Sumber / Dompet</label>
+          <select id="wallet">
+            <option value="cash">Cash</option>
+            <option value="bank">Bank</option>
+            <option value="ewallet">E-Wallet</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="category">Kategori</label>
+          <select id="category">
+            <option value="Makanan">Makanan & Minuman</option>
+            <option value="Transport">Transportasi</option>
+            <option value="Gaji">Gaji / Pendapatan</option>
+            <option value="Lainnya">Lain-lain</option>
+            <option value="Iuran">Iuran</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="receipt">Upload / Lampirkan Nota (Gambar)</label>
+          <input type="file" id="receipt" accept="image/*" onchange="handleImageUpload(event)">
+        </div>
+
+        <button type="submit" id="btn-submit" class="btn-submit">Simpan Transaksi</button>
+        <button type="button" id="btn-cancel" class="btn-cancel" onclick="resetForm()">Batal Edit</button>
+      </form>
+    </div>
+
+    <!-- Riwayat Transaksi -->
+    <div class="card">
+      <div class="card-title">Riwayat Transaksi</div>
+      <ul class="transaction-list" id="tx-list"></ul>
+    </div>
+  </div>
+
+  <!-- Modal View Nota -->
+  <div class="modal" id="receipt-modal">
+    <div class="modal-content">
+      <h4 style="font-size: 16px;">Bukti Nota Transaksi</h4>
+      <img id="modal-img" src="" alt="Nota Transaksi">
+      <button class="btn-close" onclick="closeModal()">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWVKUMsOgZ_RQkva2sKPT_KatNxkJlrWA",
+      authDomain: "keuangan-english-club.firebaseapp.com",
+      databaseURL: "https://keuangan-english-club-default-rtdb.firebaseio.com",
+      projectId: "keuangan-english-club",
+      storageBucket: "keuangan-english-club.firebasestorage.app",
+      messagingSenderId: "799661651204",
+      appId: "1:799661651204:web:8502ea6bdcbd2efbb94c51",
+      measurementId: "G-TQH2MK7MXZ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Default Tanggal Hari Ini
+    document.getElementById('date').valueAsDate = new Date();
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.querySelector('.theme-toggle').innerText = isDark ? '☀️ Mode Terang' : '🌙 Mode Malam';
+    }
+
+    // Convert file gambar ke Base64 DataURL
+    let currentReceiptBase64 = "";
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          currentReceiptBase64 = reader.result;
+          document.getElementById('tx-receipt-data').value = reader.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Simpan Transaksi (Tambah / Update)
+    function saveTransaction(e) {
+      e.preventDefault();
+      const id = document.getElementById('tx-id').value;
+      const date = document.getElementById('date').value;
+      const desc = document.getElementById('desc').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const type = document.getElementById('type').value;
+      const wallet = document.getElementById('wallet').value;
+      const category = document.getElementById('category').value;
+      const receipt = document.getElementById('tx-receipt-data').value || "";
+
+      const txData = {
+        date,
+        desc,
+        amount,
+        type,
+        wallet,
+        category,
+        receipt,
+        timestamp: Date.now()
+      };
+
+      if (id) {
+        db.ref('transactions/' + id).update(txData);
+      } else {
+        db.ref('transactions').push(txData);
+      }
+
+      resetForm();
+    }
+
+    // Load data ke form untuk di-edit
+    function editTransaction(id, date, desc, amount, type, wallet, category, receipt) {
+      document.getElementById('tx-id').value = id;
+      document.getElementById('date').value = date;
+      document.getElementById('desc').value = desc;
+      document.getElementById('amount').value = amount;
+      document.getElementById('type').value = type;
+      document.getElementById('wallet').value = wallet;
+      document.getElementById('category').value = category;
+      document.getElementById('tx-receipt-data').value = receipt || "";
+
+      document.getElementById('form-title').innerText = 'Edit Transaksi';
+      document.getElementById('btn-submit').innerText = 'Update Transaksi';
+      document.getElementById('btn-cancel').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('tx-id').value = '';
+      document.getElementById('tx-receipt-data').value = '';
+      document.getElementById('tx-form').reset();
+      document.getElementById('date').valueAsDate = new Date();
+      document.getElementById('form-title').innerText = 'Tambah Transaksi Baru';
+      document.getElementById('btn-submit').innerText = 'Simpan Transaksi';
+      document.getElementById('btn-cancel').style.display = 'none';
+      currentReceiptBase64 = "";
+    }
+
+    function deleteTransaction(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+        db.ref('transactions/' + id).remove();
+      }
+    }
+
+    // Modal Nota
+    function showReceipt(receiptData) {
+      document.getElementById('modal-img').src = receiptData;
+      document.getElementById('receipt-modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('receipt-modal').style.display = 'none';
+    }
+
+    // Firebase Listener
+    db.ref('transactions').on('value', (snapshot) => {
+      const data = snapshot.val();
+      const balances = { cash: 0, bank: 0, ewallet: 0 };
+      const listEl = document.getElementById('tx-list');
+      listEl.innerHTML = '';
+
+      if (data) {
+        Object.keys(data).forEach(key => {
+          const tx = data[key];
+          
+          const w = balances[tx.wallet] !== undefined ? tx.wallet : 'bank';
+          if (tx.type === 'pemasukan') {
+            balances[w] += tx.amount;
+          } else {
+            balances[w] -= tx.amount;
+          }
+
+          const displayDate = tx.date ? tx.date : '-';
+          const hasReceipt = tx.receipt && tx.receipt.length > 0;
+
+          const li = document.createElement('li');
+          li.className = 'transaction-item';
+          li.innerHTML = `
+            <div class="tx-info">
+              <h4>${tx.desc}</h4>
+              <p>${displayDate} • ${tx.category} • <span style="text-transform: capitalize;">${tx.wallet}</span></p>
+            </div>
+            <div class="tx-right">
+              <div class="amount ${tx.type}">
+                ${tx.type === 'pemasukan' ? '+' : '-'} Rp ${tx.amount.toLocaleString('id-ID')}
+              </div>
+              <div class="action-btns">
+                ${hasReceipt ? `<button class="btn-action btn-nota" onclick="showReceipt('${tx.receipt}')">📄 Nota</button>` : ''}
+                <button class="btn-action btn-edit" onclick="editTransaction('${key}', '${tx.date || ''}', '${tx.desc}', ${tx.amount}, '${tx.type}', '${tx.wallet}', '${tx.category}', '${tx.receipt || ''}')">Edit</button>
+                <button class="btn-action btn-delete" onclick="deleteTransaction('${key}')">Hapus</button>
+              </div>
+            </div>
+          `;
+          listEl.prepend(li);
+        });
+      }
+
+      document.getElementById('bal-cash').innerText = `Rp ${balances.cash.toLocaleString('id-ID')}`;
+      document.getElementById('bal-bank').innerText = `Rp ${(balances.bank + (balances.bca || 0)).toLocaleString('id-ID')}`;
+      document.getElementById('bal-ewallet').innerText = `Rp ${balances.ewallet.toLocaleString('id-ID')}`;
+    });
+  </script>
+</body>
+</html>
