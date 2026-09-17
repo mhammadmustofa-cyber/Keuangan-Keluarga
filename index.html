@@ -11,9 +11,7 @@
       --text-main: #0f172a;
       --text-muted: #64748b;
       --orange-primary: #f97316;
-      --lime-active: #d9f99d;
-      --lime-text: #3f6212;
-      --border-color: #f1f5f9;
+      --border-color: #e2e8f0;
       --income: #10b981;
       --expense: #ef4444;
     }
@@ -143,7 +141,7 @@
       font-weight: 800;
     }
 
-    /* Fitur 3 Menu */
+    /* Fitur 3 Menu Utama */
     .features-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -185,7 +183,7 @@
       color: var(--text-main);
     }
 
-    /* Form & Transaction Box */
+    /* Form Box */
     .card-box {
       background: var(--card-bg);
       border-radius: 16px;
@@ -250,9 +248,43 @@
       display: none;
     }
 
-    /* List Transaksi */
+    /* Tampilan Rekening Koran Bulanan */
+    .month-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      margin: 0 20px 16px 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      overflow: hidden;
+    }
+
+    .month-header {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .month-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .month-summary {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .month-summary .m-in { color: var(--income); }
+    .month-summary .m-out { color: var(--expense); }
+
     .transaction-list {
       list-style: none;
+      padding: 0 16px;
     }
 
     .transaction-item {
@@ -291,7 +323,7 @@
 
     .action-btns {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       justify-content: flex-end;
       margin-top: 4px;
     }
@@ -302,7 +334,7 @@
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      padding: 2px 4px;
+      padding: 2px 0;
     }
 
     .btn-delete { color: var(--expense); }
@@ -363,7 +395,7 @@
     </div>
   </div>
 
-  <!-- Ringkasan Saldo -->
+  <!-- Ringkasan Saldo Utama -->
   <div class="summary-container">
     <div class="balance-card">
       <div class="balance-label">Total Saldo saat ini</div>
@@ -373,11 +405,11 @@
       </div>
       <div class="summary-grid">
         <div class="summary-item">
-          <span>Pemasukan</span>
+          <span>Total Pemasukan</span>
           <strong id="bal-in">Rp 0</strong>
         </div>
         <div class="summary-item">
-          <span>Pengeluaran</span>
+          <span>Total Pengeluaran</span>
           <strong id="bal-out">Rp 0</strong>
         </div>
       </div>
@@ -400,7 +432,7 @@
     </div>
     <div class="feature-card" onclick="scrollToHistory()">
       <div class="feature-icon bg-history">📜</div>
-      <div class="feature-label">Riwayat Transaksi</div>
+      <div class="feature-label">Rekening Koran</div>
     </div>
   </div>
 
@@ -466,13 +498,13 @@
     </form>
   </div>
 
-  <!-- Riwayat Transaksi -->
-  <div class="card-box" id="history-container">
-    <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
-      Riwayat Transaksi
-    </div>
-    <ul class="transaction-list" id="tx-list"></ul>
+  <!-- Section Title Riwayat Transaksi / Rekening Koran -->
+  <div class="section-header" id="history-container">
+    <div class="section-title">Rekening Koran (Riwayat Per Bulan)</div>
   </div>
+
+  <!-- Container Riwayat Transaksi Per Bulan -->
+  <div id="monthly-history-wrapper"></div>
 
   <!-- Modal View Nota -->
   <div class="modal" id="receipt-modal">
@@ -613,46 +645,122 @@
       document.getElementById('receipt-modal').style.display = 'none';
     }
 
+    const monthNames = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
     db.ref('transactions').on('value', (snapshot) => {
       const data = snapshot.val();
       totalIncome = 0;
       totalExpense = 0;
-      const listEl = document.getElementById('tx-list');
-      listEl.innerHTML = '';
 
-      if (data) {
-        Object.keys(data).forEach(key => {
-          const tx = data[key];
-          
-          if (tx.type === 'pemasukan') {
-            totalIncome += tx.amount;
-          } else {
-            totalExpense += tx.amount;
-          }
+      const wrapper = document.getElementById('monthly-history-wrapper');
+      wrapper.innerHTML = '';
 
-          const hasReceipt = tx.receipt && tx.receipt.length > 0;
-
-          const li = document.createElement('li');
-          li.className = 'transaction-item';
-          li.innerHTML = `
-            <div class="tx-info">
-              <h4>${tx.desc}</h4>
-              <p>${tx.date || '-'} • ${tx.category}</p>
-            </div>
-            <div class="tx-right">
-              <div class="amount ${tx.type}">
-                ${tx.type === 'pemasukan' ? '+' : '-'} Rp ${tx.amount.toLocaleString('id-ID')}
-              </div>
-              <div class="action-btns">
-                ${hasReceipt ? `<button class="btn-action btn-edit" onclick="showReceipt('${tx.receipt}')">Bukti</button>` : ''}
-                <button class="btn-action btn-edit" onclick="editTransaction('${key}', '${tx.date || ''}', '${tx.desc}', ${tx.amount}, '${tx.type}', '${tx.wallet}', '${tx.category}', '${tx.receipt || ''}')">Edit</button>
-                <button class="btn-action btn-delete" onclick="deleteTransaction('${key}')">Hapus</button>
-              </div>
-            </div>
-          `;
-          listEl.prepend(li);
-        });
+      if (!data) {
+        wrapper.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px;">Belum ada riwayat transaksi</div>';
+        updateSaldoDisplay();
+        return;
       }
+
+      // Format dan Kelompokkan Transaksi Berdasarkan Bulan & Tahun (YYYY-MM)
+      const grouped = {};
+
+      Object.keys(data).forEach(key => {
+        const tx = data[key];
+        tx.id = key;
+
+        // Hitung total akumulasi global
+        if (tx.type === 'pemasukan') {
+          totalIncome += tx.amount;
+        } else {
+          totalExpense += tx.amount;
+        }
+
+        // Tentukan Kunci Bulan
+        let yearMonth = "Lainnya";
+        if (tx.date) {
+          const d = new Date(tx.date);
+          if (!isNaN(d.getTime())) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            yearMonth = `${y}-${m}`;
+          }
+        }
+
+        if (!grouped[yearMonth]) {
+          grouped[yearMonth] = [];
+        }
+        grouped[yearMonth].push(tx);
+      });
+
+      // Urutkan Bulan dari Terbaru ke Terlama
+      const sortedMonths = Object.keys(grouped).sort().reverse();
+
+      sortedMonths.forEach(ym => {
+        const items = grouped[ym];
+        
+        // Urutkan item transaksi dari tanggal terbaru
+        items.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+        let mIn = 0;
+        let mOut = 0;
+
+        items.forEach(item => {
+          if (item.type === 'pemasukan') mIn += item.amount;
+          else mOut += item.amount;
+        });
+
+        // Parse judul bulan
+        let headerTitle = "Transaksi Lainnya";
+        if (ym !== "Lainnya") {
+          const [year, month] = ym.split('-');
+          headerTitle = `${monthNames[parseInt(month, 10) - 1]} ${year}`;
+        }
+
+        // Buat Elemen Kartu Bulan (Rekening Koran)
+        const monthCard = document.createElement('div');
+        monthCard.className = 'month-card';
+
+        let listHtml = '';
+        items.forEach(tx => {
+          const hasReceipt = tx.receipt && tx.receipt.length > 0;
+          listHtml += `
+            <li class="transaction-item">
+              <div class="tx-info">
+                <h4>${tx.desc}</h4>
+                <p>${tx.date || '-'} • ${tx.category}</p>
+              </div>
+              <div class="tx-right">
+                <div class="amount ${tx.type}">
+                  ${tx.type === 'pemasukan' ? '+' : '-'} Rp ${tx.amount.toLocaleString('id-ID')}
+                </div>
+                <div class="action-btns">
+                  ${hasReceipt ? `<button class="btn-action btn-edit" onclick="showReceipt('${tx.receipt}')">Bukti</button>` : ''}
+                  <button class="btn-action btn-edit" onclick="editTransaction('${tx.id}', '${tx.date || ''}', '${tx.desc}', ${tx.amount}, '${tx.type}', '${tx.wallet}', '${tx.category}', '${tx.receipt || ''}')">Edit</button>
+                  <button class="btn-action btn-delete" onclick="deleteTransaction('${tx.id}')">Hapus</button>
+                </div>
+              </div>
+            </li>
+          `;
+        });
+
+        monthCard.innerHTML = `
+          <div class="month-header">
+            <div class="month-title">${headerTitle}</div>
+            <div class="month-summary">
+              <span class="m-in">Masuk: +Rp ${mIn.toLocaleString('id-ID')}</span>
+              <span class="m-out">Keluar: -Rp ${mOut.toLocaleString('id-ID')}</span>
+            </div>
+          </div>
+          <ul class="transaction-list">
+            ${listHtml}
+          </ul>
+        `;
+
+        wrapper.appendChild(monthCard);
+      });
 
       updateSaldoDisplay();
     });
