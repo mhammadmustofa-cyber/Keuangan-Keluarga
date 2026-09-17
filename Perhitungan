@@ -400,21 +400,21 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- 1. PERBAIKAN: SDK Firebase dipanggil DULUAN sebelum script internal -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
+  <!-- 2. PERBAIKAN: Konfigurasi Firebase baru (keuangan-keluarga-2597a) -->
   <script>
-    // Konfigurasi Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyDWVKUMsOgZ_RQkva2sKPT_KatNxkJlrWA",
-      authDomain: "keuangan-english-club.firebaseapp.com",
-      databaseURL: "https://keuangan-english-club-default-rtdb.firebaseio.com",
-      projectId: "keuangan-english-club",
-      storageBucket: "keuangan-english-club.firebasestorage.app",
-      messagingSenderId: "799661651204",
-      appId: "1:799661651204:web:8502ea6bdcbd2efbb94c51",
-      measurementId: "G-TQH2MK7MXZ"
+      apiKey: "AIzaSyCjYegoSTgqi3H8f9goiZb...", // Salin lengkap dari Firebase Console kamu
+      authDomain: "keuangan-keluarga-2597a.firebaseapp.com",
+      databaseURL: "https://keuangan-keluarga-2597a-default-rtdb.firebaseio.com",
+      projectId: "keuangan-keluarga-2597a",
+      storageBucket: "keuangan-keluarga-2597a.firebasestorage.app",
+      messagingSenderId: "271670297242",
+      appId: "1:271670297242:web:6a18ec4c3432d9b6575523",
+      measurementId: "G-71CRK6XEP6"
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -565,8 +565,5 @@
       document.getElementById('bal-ewallet').innerText = `Rp ${balances.ewallet.toLocaleString('id-ID')}`;
     });
   </script>
-<!-- Load SDK Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 </body>
 </html>
