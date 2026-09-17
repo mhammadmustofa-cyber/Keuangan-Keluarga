@@ -11,10 +11,8 @@
       --text-main: #0f172a;
       --text-muted: #64748b;
       --orange-primary: #f97316;
-      --orange-light: #ffedd5;
       --lime-active: #d9f99d;
       --lime-text: #3f6212;
-      --tosca-bg: #a5f3fc;
       --border-color: #f1f5f9;
       --income: #10b981;
       --expense: #ef4444;
@@ -35,7 +33,7 @@
       padding-bottom: 80px;
     }
 
-    /* Header Profile & Quick Action */
+    /* Header Profile */
     .header-profile {
       display: flex;
       justify-content: space-between;
@@ -50,10 +48,11 @@
     }
 
     .avatar-circle {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: #e2e8f0;
+      background: var(--orange-primary);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -82,37 +81,60 @@
       display: block;
     }
 
-    /* Navigation Pill Bar */
-    .nav-pill-container {
-      display: flex;
-      background: #f1f5f9;
-      border-radius: 30px;
-      padding: 4px;
-      margin: 12px 20px;
-      gap: 4px;
+    /* Ringkasan Saldo Card */
+    .summary-container {
+      padding: 10px 20px;
     }
 
-    .nav-pill {
-      flex: 1;
-      text-align: center;
-      padding: 10px 0;
+    .balance-card {
+      background: linear-gradient(135deg, #ff8a00 0%, #e55300 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+    }
+
+    .balance-label {
+      font-size: 12px;
+      opacity: 0.9;
+      font-weight: 600;
+    }
+
+    .balance-amount {
+      font-size: 26px;
+      font-weight: 800;
+      margin: 4px 0 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .summary-item span {
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
+    .summary-item strong {
       font-size: 14px;
       font-weight: 700;
-      border-radius: 25px;
-      color: var(--text-muted);
-      cursor: pointer;
+      margin-top: 2px;
     }
 
-    .nav-pill.active {
-      background: var(--lime-active);
-      color: var(--lime-text);
-    }
-
-    /* Section Headers */
+    /* Section Header */
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 16px 20px 10px 20px;
     }
 
@@ -121,148 +143,54 @@
       font-weight: 800;
     }
 
-    .section-action {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--orange-primary);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    /* Cards Horizontal Carousel */
-    .cards-scroll {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      padding: 0 20px 10px 20px;
-      scrollbar-width: none;
-    }
-
-    .cards-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .portfolio-card {
-      min-width: 110px;
-      background: #c7d2fe;
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .portfolio-card span {
-      font-size: 24px;
-    }
-
-    .portfolio-card p {
-      font-size: 12px;
-      font-weight: 700;
-      color: #312e81;
-    }
-
-    .account-card {
-      min-width: 260px;
-      background: linear-gradient(135deg, #ff8a00 0%, #e55300 100%);
-      color: white;
-      border-radius: 16px;
-      padding: 18px;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
-    }
-
-    .account-type {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      opacity: 0.9;
-    }
-
-    .account-number {
-      font-size: 18px;
-      font-weight: 800;
-      margin-top: 4px;
-      letter-spacing: 1px;
-    }
-
-    .account-label {
-      font-size: 11px;
-      margin-top: 14px;
-      opacity: 0.85;
-    }
-
-    .account-balance {
-      font-size: 20px;
-      font-weight: 800;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .badge-utama {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #334155;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 12px;
-    }
-
-    /* Grid Fitur Pilihan */
-    .features-grid {
+    /* Fitur 3 Menu */
+    .features-grid-3 {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px 12px;
-      padding: 10px 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 0 20px;
     }
 
-    .feature-item {
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
     .feature-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 20px;
     }
+
+    .bg-in { background: #d1fae5; color: #059669; }
+    .bg-out { background: #fee2e2; color: #dc2626; }
+    .bg-history { background: #e0f2fe; color: #0284c7; }
 
     .feature-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-main);
-      line-height: 1.2;
     }
 
-    /* Warna Icon Fitur Modern */
-    .bg-transfer { background: #bae6fd; color: #0284c7; }
-    .bg-tapcash { background: #fed7aa; color: #ea580c; }
-    .bg-bayar { background: #c7d2fe; color: #4338ca; }
-    .bg-ewallet { background: #a7f3d0; color: #059669; }
-    .bg-va { background: #99f6e4; color: #0d9488; }
-    .bg-luar { background: #a5f3fc; color: #0284c7; }
-    .bg-lifestyle { background: #ddd6fe; color: #7c3aed; }
-    .bg-semua { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-
-    /* Form Input & List Transaksi */
+    /* Form & Transaction Box */
     .card-box {
       background: var(--card-bg);
       border-radius: 16px;
       padding: 16px;
-      margin: 10px 20px;
+      margin: 16px 20px;
       border: 1px solid var(--border-color);
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
@@ -371,42 +299,14 @@
     .btn-action {
       background: none;
       border: none;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
+      padding: 2px 4px;
     }
 
     .btn-delete { color: var(--expense); }
     .btn-edit { color: var(--orange-primary); }
-
-    /* Bottom Bar QRIS */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      padding: 10px 0;
-      pointer-events: none;
-    }
-
-    .qris-btn {
-      pointer-events: auto;
-      background: #000000;
-      color: white;
-      padding: 10px 24px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      cursor: pointer;
-    }
 
     /* Modal Nota */
     .modal {
@@ -453,94 +353,59 @@
   <!-- Header Profile -->
   <div class="header-profile">
     <div class="user-info">
-      <div class="avatar-circle">👤</div>
-      <div class="greeting-name">Hi, M Mustofa!</div>
+      <div class="avatar-circle">🏠</div>
+      <div class="greeting-name">Keuangan Keluarga</div>
     </div>
     <div class="header-icons">
       <div class="icon-btn">
         <span>🔔</span> Notifikasi
       </div>
-      <div class="icon-btn">
-        <span>📄</span> Bukti Transaksi
-      </div>
     </div>
   </div>
 
-  <!-- Tab Navigation Pill -->
-  <div class="nav-pill-container">
-    <div class="nav-pill">Insight</div>
-    <div class="nav-pill active">Transaksi</div>
-    <div class="nav-pill">Growth</div>
-  </div>
-
-  <!-- Rekening Section -->
-  <div class="section-header">
-    <div class="section-title">Rekening transaksi kamu</div>
-    <div class="section-action">Lihat Semua</div>
-  </div>
-
-  <!-- Cards Scroll Horizontal -->
-  <div class="cards-scroll">
-    <div class="portfolio-card">
-      <span>📊</span>
-      <p>Lihat Portfolio</p>
-    </div>
-
-    <div class="account-card">
-      <div class="badge-utama">Utama</div>
-      <div class="account-type">TAPLUS DIGITAL</div>
-      <div class="account-number">1821896958</div>
-      <div class="account-label">Saldo efektif</div>
-      <div class="account-balance">
+  <!-- Ringkasan Saldo -->
+  <div class="summary-container">
+    <div class="balance-card">
+      <div class="balance-label">Total Saldo saat ini</div>
+      <div class="balance-amount">
         <span id="bal-total">Rp ********</span>
-        <span style="font-size: 14px; cursor: pointer;" onclick="toggleHideSaldo()">👁️</span>
+        <span style="font-size: 16px; cursor: pointer;" onclick="toggleHideSaldo()">👁️</span>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span>Pemasukan</span>
+          <strong id="bal-in">Rp 0</strong>
+        </div>
+        <div class="summary-item">
+          <span>Pengeluaran</span>
+          <strong id="bal-out">Rp 0</strong>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Fitur Pilihan Grid -->
+  <!-- Fitur Pilihan (3 Menu Utama) -->
   <div class="section-header">
-    <div class="section-title">Fitur pilihan kamu</div>
-    <div class="section-action">Atur</div>
+    <div class="section-title">Fitur Utama</div>
   </div>
 
-  <div class="features-grid">
-    <div class="feature-item" onclick="selectType('pengeluaran')">
-      <div class="feature-icon bg-transfer">↗️</div>
-      <div class="feature-label">Transfer</div>
+  <div class="features-grid-3">
+    <div class="feature-card" onclick="selectMenu('pemasukan')">
+      <div class="feature-icon bg-in">📥</div>
+      <div class="feature-label">Pemasukan</div>
     </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-tapcash">💳</div>
-      <div class="feature-label">TapCash</div>
+    <div class="feature-card" onclick="selectMenu('pengeluaran')">
+      <div class="feature-icon bg-out">📤</div>
+      <div class="feature-label">Pengeluaran</div>
     </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-bayar">🧾</div>
-      <div class="feature-label">Bayar & Beli</div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-ewallet">📲</div>
-      <div class="feature-label">E-Wallet</div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-va">🏦</div>
-      <div class="feature-label">Virtual Account</div>
-    </div>
-    <div class="feature-item" onclick="selectType('pemasukan')">
-      <div class="feature-icon bg-luar">🌐</div>
-      <div class="feature-label">Transfer Luar Negeri</div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-lifestyle">🛍️</div>
-      <div class="feature-label">Lifestyle</div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon bg-semua">🎛️</div>
-      <div class="feature-label">Lihat Semua</div>
+    <div class="feature-card" onclick="scrollToHistory()">
+      <div class="feature-icon bg-history">📜</div>
+      <div class="feature-label">Riwayat Transaksi</div>
     </div>
   </div>
 
-  <!-- Input Transaksi Baris Baru -->
-  <div class="card-box">
+  <!-- Form Transaksi -->
+  <div class="card-box" id="form-container">
     <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);" id="form-title">
       Tambah Transaksi Baru
     </div>
@@ -555,7 +420,7 @@
 
       <div class="input-group">
         <label for="desc">Keterangan</label>
-        <input type="text" id="desc" placeholder="Contoh: Belanja / Transfer" required>
+        <input type="text" id="desc" placeholder="Contoh: Belanja Bulanan / Gaji" required>
       </div>
 
       <div class="input-group">
@@ -574,8 +439,8 @@
       <div class="input-group">
         <label for="wallet">Sumber / Dompet</label>
         <select id="wallet">
-          <option value="bank">Taplus Digital</option>
-          <option value="cash">Cash</option>
+          <option value="bank">Bank / Rekening</option>
+          <option value="cash">Tunai (Cash)</option>
           <option value="ewallet">E-Wallet</option>
         </select>
       </div>
@@ -585,6 +450,7 @@
         <select id="category">
           <option value="Makanan">Makanan & Minuman</option>
           <option value="Transport">Transportasi</option>
+          <option value="Belanja">Belanja / Kebutuhan</option>
           <option value="Gaji">Gaji / Pendapatan</option>
           <option value="Lainnya">Lain-lain</option>
         </select>
@@ -601,18 +467,11 @@
   </div>
 
   <!-- Riwayat Transaksi -->
-  <div class="card-box">
+  <div class="card-box" id="history-container">
     <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
       Riwayat Transaksi
     </div>
     <ul class="transaction-list" id="tx-list"></ul>
-  </div>
-
-  <!-- QRIS Bottom Bar -->
-  <div class="bottom-bar">
-    <div class="qris-btn">
-      <span>📷</span> QRIS
-    </div>
   </div>
 
   <!-- Modal View Nota -->
@@ -646,7 +505,8 @@
     document.getElementById('date').valueAsDate = new Date();
 
     let isSaldoHidden = true;
-    let actualSaldo = 0;
+    let totalIncome = 0;
+    let totalExpense = 0;
 
     function toggleHideSaldo() {
       isSaldoHidden = !isSaldoHidden;
@@ -655,25 +515,35 @@
 
     function updateSaldoDisplay() {
       const saldoEl = document.getElementById('bal-total');
+      const inEl = document.getElementById('bal-in');
+      const outEl = document.getElementById('bal-out');
+      const totalBalance = totalIncome - totalExpense;
+
       if (isSaldoHidden) {
         saldoEl.innerText = "Rp ********";
+        inEl.innerText = "Rp ********";
+        outEl.innerText = "Rp ********";
       } else {
-        saldoEl.innerText = `Rp ${actualSaldo.toLocaleString('id-ID')}`;
+        saldoEl.innerText = `Rp ${totalBalance.toLocaleString('id-ID')}`;
+        inEl.innerText = `Rp ${totalIncome.toLocaleString('id-ID')}`;
+        outEl.innerText = `Rp ${totalExpense.toLocaleString('id-ID')}`;
       }
     }
 
-    function selectType(typeVal) {
+    function selectMenu(typeVal) {
       document.getElementById('type').value = typeVal;
-      document.getElementById('tx-form').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    let currentReceiptBase64 = "";
+    function scrollToHistory() {
+      document.getElementById('history-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function handleImageUpload(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onloadend = function() {
-          currentReceiptBase64 = reader.result;
           document.getElementById('tx-receipt-data').value = reader.result;
         }
         reader.readAsDataURL(file);
@@ -715,7 +585,7 @@
       document.getElementById('form-title').innerText = 'Edit Transaksi';
       document.getElementById('btn-submit').innerText = 'Update Transaksi';
       document.getElementById('btn-cancel').style.display = 'block';
-      document.getElementById('tx-form').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
     }
 
     function resetForm() {
@@ -726,7 +596,6 @@
       document.getElementById('form-title').innerText = 'Tambah Transaksi Baru';
       document.getElementById('btn-submit').innerText = 'Simpan Transaksi';
       document.getElementById('btn-cancel').style.display = 'none';
-      currentReceiptBase64 = "";
     }
 
     function deleteTransaction(id) {
@@ -739,13 +608,15 @@
       document.getElementById('modal-img').src = receiptData;
       document.getElementById('receipt-modal').style.display = 'flex';
     }
+
     function closeModal() {
       document.getElementById('receipt-modal').style.display = 'none';
     }
 
     db.ref('transactions').on('value', (snapshot) => {
       const data = snapshot.val();
-      actualSaldo = 0;
+      totalIncome = 0;
+      totalExpense = 0;
       const listEl = document.getElementById('tx-list');
       listEl.innerHTML = '';
 
@@ -754,9 +625,9 @@
           const tx = data[key];
           
           if (tx.type === 'pemasukan') {
-            actualSaldo += tx.amount;
+            totalIncome += tx.amount;
           } else {
-            actualSaldo -= tx.amount;
+            totalExpense += tx.amount;
           }
 
           const hasReceipt = tx.receipt && tx.receipt.length > 0;
